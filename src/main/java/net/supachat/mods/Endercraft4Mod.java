@@ -1,10 +1,17 @@
 package net.supachat.mods;
 
+import net.minecraft.block.BlockBeacon;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.PotionTypes;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.PotionType;
+import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -37,6 +44,16 @@ public class Endercraft4Mod {
                 "XXX",
                 'X', Blocks.IRON_BARS,
                 'A', Items.NETHER_STAR
+        );
+
+        NBTTagCompound nbtPotion = new NBTTagCompound();
+        nbtPotion.setString("Potion", "minecraft:levitation");
+//        ItemStack itemStack = new ItemStack(null);
+//        PotionUtils.addPotionToItemStack(null, PotionTypes.LEAPING);
+        BrewingRecipeRegistry.addRecipe(
+                new ItemStack(Items.SHULKER_SHELL),
+                new ItemStack(Items.FEATHER),
+                new ItemStack(Items.POTIONITEM, 1, 0, nbtPotion)
         );
     }
 }
