@@ -8,6 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
@@ -20,7 +21,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = Endercraft4Mod.MODID, name = Endercraft4Mod.NAME, version = Endercraft4Mod.VERSION)
+@Mod(modid = Endercraft4Mod.MODID, name = Endercraft4Mod.NAME, version = Endercraft4Mod.VERSION, acceptableRemoteVersions = "*")
 public class Endercraft4Mod {
     public static final String MODID = "endercraft4";
     public static final String NAME = "Endercaft 4 Mod";
@@ -47,7 +48,17 @@ public class Endercraft4Mod {
         );
 
         NBTTagCompound nbtPotion = new NBTTagCompound();
-        nbtPotion.setString("Potion", "minecraft:levitation");
+        NBTTagCompound name = new NBTTagCompound();
+        name.setString("Name", "Potion of Levitation");
+        nbtPotion.setTag("display", name);
+
+        NBTTagList customEffects = new NBTTagList();
+        NBTTagCompound effect = new NBTTagCompound();
+        effect.setInteger("Id", 25);
+        effect.setInteger("Amplifier", 50);
+        effect.setInteger("Duration", 600);
+        customEffects.appendTag(effect);
+        nbtPotion.setTag("CustomPotionEffects", customEffects);
 //        ItemStack itemStack = new ItemStack(null);
 //        PotionUtils.addPotionToItemStack(null, PotionTypes.LEAPING);
         BrewingRecipeRegistry.addRecipe(
