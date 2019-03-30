@@ -1,0 +1,16 @@
+[
+{
+  "modid": "endercraft4",
+  "name": "Endercraft 4 Mod",
+  "description": "Mod for Endercraft 4.",
+  "version": "1.0",
+  "mcversion": "1.12.2",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Max Steinberg"],
+  "credits": "Max Steinberg",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
