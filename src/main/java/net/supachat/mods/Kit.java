@@ -2,7 +2,9 @@ package net.supachat.mods;
 
 import net.minecraft.entity.monster.EntityHusk;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,7 +42,10 @@ public class Kit {
     }
 
     public void apply(EntityPlayer p) {
-        // TODO: deduct cost
+        if(!Ender4EventHandler.deductCost(p, this.cost, Item.getItemFromBlock(Blocks.DIAMOND_BLOCK))) {
+            return;
+        }
+
         if(this.helmet != null) {
             p.inventory.armorInventory.set(3, this.helmet);
         }

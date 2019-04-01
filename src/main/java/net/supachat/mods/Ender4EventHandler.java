@@ -12,6 +12,7 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.datafix.walkers.ItemStackData;
 import net.minecraft.util.text.ChatType;
 import net.minecraft.util.text.ITextComponent;
@@ -29,6 +30,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.codehaus.plexus.util.StringUtils;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,6 +45,7 @@ public class Ender4EventHandler {
 //    }
 
     private static Map<String, Kit> kits;
+
     static {
         kits = new HashMap<>();
         ItemStack knightHelmet = new ItemStack(Items.CHAINMAIL_HELMET);
@@ -127,28 +130,29 @@ public class Ender4EventHandler {
 
     @SubscribeEvent
     public void onPlayerUseItem(LivingEntityUseItemEvent.Finish e) {
-        if(e.getItem().getItem().equals(Items.SPECKLED_MELON)) {
-            if(e.getEntity() instanceof EntityPlayer) {
-                ((EntityPlayer) (e.getEntity())).addPotionEffect(new PotionEffect(MobEffects.HASTE, 20*20, 5, false, true)); // add haste
+        if (e.getItem().getItem().equals(Items.SPECKLED_MELON)) {
+            if (e.getEntity() instanceof EntityPlayer) {
+                ((EntityPlayer) (e.getEntity())).addPotionEffect(new PotionEffect(MobEffects.HASTE, 20 * 20, 5, false, true)); // add haste
             }
         }
     }
 
     @SubscribeEvent
     public void onEntityJoinWorld(EntityJoinWorldEvent e) {
-        if(e.getEntity() instanceof EntityItem) {
-            e.setCanceled(this.buy(e.getWorld().getClosestPlayerToEntity(e.getEntity(), 10), (EntityItem)e.getEntity()));
+        if (e.getEntity() instanceof EntityItem) {
+            e.setCanceled(this.buy(e.getWorld().getClosestPlayerToEntity(e.getEntity(), 10), (EntityItem) e.getEntity()));
         }
     }
 
     /**
      * standard docstring
+     *
      * @param p troll
      * @param i wat
      * @return whether to destroy the entity
      */
     public boolean buy(EntityPlayer p, EntityItem i) {
-        if(p == null || i == null) {
+        if (p == null || i == null) {
             return false;
         }
 
@@ -168,7 +172,7 @@ public class Ender4EventHandler {
                 return false;
             }
 
-            if (!this.deductCost(p, cost)) {
+            if (!deductCost(p, cost, Items.DIAMOND)) {
 //                e.pickedUp.changeDimension(-1);
                 i.changeDimension(1);
 //                e.player.dropItemAndGetStack(e.pickedUp);
@@ -188,12 +192,30 @@ public class Ender4EventHandler {
         return false;
     }
 
-    private boolean deductCost(EntityPlayer player, int cost) {
+//    @SuppressWarnings("unchecked")
+    public static boolean deductCost(EntityPlayer player, int cost, Item toDeduct) {
+//        int c = cost;
         try {
             InventoryPlayer inv = player.inventory;
-            inv.getItemStack();
-        } catch(NullPointerException e) {
-//            e.printStackTrace();
+            return inv.clearMatchingItems(toDeduct, -1, cost, null) == cost;
+//            inv.getItemStack();
+//            Field ai = InventoryPlayer.class.getDeclaredField("allInventories");
+//            ai.setAccessible(true);
+//            NonNullList list = ((NonNullList<ItemStack>) ai.get(inv));
+//            for (int i = 0; i < list.size(); i++) {
+//                if (((ItemStack) list.get(i)).getItem().equals(toDeduct)) {
+//                    int ct = ((ItemStack) list.get(i)).getCount();
+//                    if(ct > c) {
+//                        c = 0;
+//                        ((ItemStack) list.get(i)).setCount(ct - c);
+//                    } else {
+//                        c -= ct;
+//                        ((ItemStack) list.get(i)).setCount(0);
+//                    }
+//                }
+//            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return false;
@@ -201,18 +223,18 @@ public class Ender4EventHandler {
 
     @SubscribeEvent
     public void punchZombieEvent(LivingDamageEvent e) {
-        if(e.getEntityLiving() instanceof EntityHusk) { // TODO: kit class
-            EntityHusk zomb = (EntityHusk)e.getEntityLiving();
+        if (e.getEntityLiving() instanceof EntityHusk) { // TODO: kit class
+            EntityHusk zomb = (EntityHusk) e.getEntityLiving();
             String kitName = zomb.serializeNBT().getString("CustomName");
-                // /summon Husk ~ ~ ~ {ZombieType:6,NoAI:1,CustomName:"<kit>"}
+            // /summon Husk ~ ~ ~ {ZombieType:6,NoAI:1,CustomName:"<kit>"}
             System.out.println(kitName);
 
-            if(!kitName.isEmpty()) {
+            if (!kitName.isEmpty()) {
                 e.setCanceled(true);
 
                 Entity source = e.getSource().getTrueSource();
-                if(source instanceof EntityPlayer) {
-                    EntityPlayer trueSource = (EntityPlayer)source;
+                if (source instanceof EntityPlayer) {
+                    EntityPlayer trueSource = (EntityPlayer) source;
                     Kit kit = kits.get(kitName);
 
                     kit.apply(trueSource);
