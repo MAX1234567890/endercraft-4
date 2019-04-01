@@ -1,13 +1,9 @@
 package net.supachat.mods;
 
-import com.sun.istack.internal.NotNull;
 import net.minecraft.entity.monster.EntityHusk;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.ISpecialArmor;
-
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,7 +39,7 @@ public class Kit {
         this.others = new ArrayList<>(Arrays.asList(others));
     }
 
-    public void apply(@NotNull EntityPlayer p) {
+    public void apply(EntityPlayer p) {
         // TODO: deduct cost
         if(this.helmet != null) {
             p.inventory.armorInventory.set(3, this.helmet);
@@ -67,7 +63,7 @@ public class Kit {
         }
     }
 
-    public void applyToHusk(@NotNull EntityHusk husk) {
+    public void applyToHusk(EntityHusk husk) {
         if(this.helmet != null) {
             husk.setItemStackToSlot(EntityEquipmentSlot.HEAD, this.helmet);
         }
