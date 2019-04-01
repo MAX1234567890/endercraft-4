@@ -88,6 +88,39 @@ public class Ender4EventHandler {
                         archerArrows
                 )
         );
+
+        ItemStack trollHelmet = new ItemStack(Items.DIAMOND_HELMET);
+        trollHelmet.addEnchantment(Enchantments.PROTECTION, 50);
+        trollHelmet.addEnchantment(Enchantments.THORNS, 50);
+        ItemStack trollChestplate = new ItemStack(Items.DIAMOND_CHESTPLATE);
+        trollChestplate.addEnchantment(Enchantments.PROTECTION, 50);
+        trollChestplate.addEnchantment(Enchantments.THORNS, 50);
+        ItemStack trollLeggings = new ItemStack(Items.DIAMOND_LEGGINGS);
+        trollLeggings.addEnchantment(Enchantments.PROTECTION, 50);
+        trollLeggings.addEnchantment(Enchantments.THORNS, 50);
+        ItemStack trollBoots = new ItemStack(Items.DIAMOND_BOOTS);
+        trollBoots.addEnchantment(Enchantments.PROTECTION, 50);
+        trollBoots.addEnchantment(Enchantments.THORNS, 50);
+        ItemStack trollBow = new ItemStack(Items.BOW);
+        trollBow.addEnchantment(Enchantments.PUNCH, 50);
+        trollBow.addEnchantment(Enchantments.POWER, 50);
+        ItemStack trollAxe = new ItemStack(Items.DIAMOND_AXE);
+        trollAxe.addEnchantment(Enchantments.KNOCKBACK, 50);
+        trollAxe.addEnchantment(Enchantments.SHARPNESS, 50);
+        ItemStack trollArrows = new ItemStack(Items.SPECTRAL_ARROW, 64);
+        kits.put(
+                "Troll",
+                new Kit(
+                        128,
+                        trollHelmet,
+                        trollChestplate,
+                        trollLeggings,
+                        trollBoots,
+                        trollAxe,
+                        trollBow,
+                        trollArrows
+                )
+        );
     }
 
     private static final boolean tpToEnd = true;
