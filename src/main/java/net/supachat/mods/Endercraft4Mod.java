@@ -12,6 +12,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fml.common.Mod;
@@ -19,6 +20,7 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @Mod(modid = Endercraft4Mod.MODID, name = Endercraft4Mod.NAME, version = Endercraft4Mod.VERSION, acceptableRemoteVersions = "*")
@@ -37,7 +39,7 @@ public class Endercraft4Mod {
     @EventHandler
     public void init(FMLInitializationEvent event) {
         GameRegistry.addShapedRecipe(
-                new ResourceLocation("endercraft4_make_spawner"),
+                new ResourceLocation("endercraft4:spawner"),
                 new ResourceLocation(""),
                 new ItemStack(Blocks.MOB_SPAWNER),
                 "XXX",
@@ -66,5 +68,7 @@ public class Endercraft4Mod {
                 new ItemStack(Items.FEATHER),
                 new ItemStack(Items.POTIONITEM, 1, 0, nbtPotion)
         );
+
+        MinecraftForge.EVENT_BUS.register(new Ender4EventHandler());
     }
 }

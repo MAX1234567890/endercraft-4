@@ -12,6 +12,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fml.common.Mod;
@@ -66,5 +67,7 @@ public class Endercraft4Mod {
                 new ItemStack(Items.FEATHER),
                 new ItemStack(Items.POTIONITEM, 1, 0, nbtPotion)
         );
+
+        MinecraftForge.EVENT_BUS.register(new Ender4EventHandler());
     }
 }

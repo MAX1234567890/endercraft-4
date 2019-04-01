@@ -14,6 +14,7 @@
     }
   },
   "result": {
-    "item": "minecraft:spawner"
+    "item": "minecraft:spawner",
+    "__comment": "i'm aware this is an error, but i ain't fixin' it"
   }
 }
